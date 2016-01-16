@@ -25,6 +25,7 @@ def main(sourceFilename, destFilename):
 			print("Updating", row[0])
 			destIdFile = destCursor.execute("SELECT idFile FROM movie_view WHERE c09=?", (row[1],)).fetchone()[0]
 			destCursor.execute("UPDATE files SET playCount=?, lastPlayed=?, dateAdded=? WHERE idFile=?", (row[2], row[3], row[4], destIdFile))
+	destConn.commit()
 
 	# TV Shows (episodes)
 	# http://kodi.wiki/view/Databases#episodeview
@@ -38,6 +39,7 @@ def main(sourceFilename, destFilename):
 		else:
 			print("Updating", row[0])
 			destCursor.execute("UPDATE files SET playCount=?, lastPlayed=?, dateAdded=? WHERE strFilename=?", (row[1], row[2], row[3], row[0]))
+	destConn.commit()
 
 	sourceConn.close()
 	destConn.close()
